@@ -17,7 +17,7 @@ jobs:
           channel: stable
 
       - name: Build Flutter Web
-        run: flutter build web --release
+        run: flutter build web --release --pwa-strategy=none
 
       - name: Prepare docs folder
         run: |
