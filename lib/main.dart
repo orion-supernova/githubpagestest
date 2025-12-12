@@ -12,19 +12,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'My Lucky Page', // This is for the browser tab title
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(), // Removed title from here
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key}); // Removed required title
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -38,21 +36,39 @@ class _MyHomePageState extends State<MyHomePage> {
     ui.platformViewRegistry.registerViewFactory(
       'youtube-video',
       (int viewId) => IFrameElement()
-        ..src = 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+        ..width = '560'
+        ..height = '315'
+        ..src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&enablejsapi=1'
+        ..allow = 'autoplay; encrypted-media; fullscreen'
+        ..setAttribute('allowfullscreen', 'true')
+        ..setAttribute('frameborder', '0')
         ..style.border = 'none',
     );
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
+      backgroundColor: Colors.lightBlue[50], // Pleasant background color
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text('If you\'re seeing this, test is successfull'),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'If you\'re seeing this, test is successfull',
+                style: Theme.of(context).textTheme.headlineMedium, // Larger font
+                textAlign: TextAlign.center,
+              ),
+            ),
             const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Your lucky number is: 42',
+                style: Theme.of(context).textTheme.headlineSmall, // Slightly smaller than above
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: 30), // More space before video
             SizedBox(
               width: 560,
               height: 315,
