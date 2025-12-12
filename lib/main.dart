@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
       (int viewId) => IFrameElement()
         ..width = '560'
         ..height = '315'
-        ..src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&enablejsapi=1'
+        ..src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&enablejsapi=1'
         ..allow = 'autoplay; encrypted-media; fullscreen'
         ..setAttribute('allowfullscreen', 'true')
         ..setAttribute('frameborder', '0')
