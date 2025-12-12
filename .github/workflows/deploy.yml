@@ -1,4 +1,4 @@
-name: Deploy Flutter Web to GitHub Pages
+name: Deploy Flutter Web to /docs on main
 
 on:
   push:
@@ -19,8 +19,17 @@ jobs:
       - name: Build Flutter Web
         run: flutter build web --release
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/web
+      - name: Prepare docs folder
+        run: |
+          rm -rf docs
+          mkdir docs
+          cp -r build/web/* docs/
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "github-actions"
+          
+          git add docs
+          git commit -m "Update web build" || echo "No changes to commit"
+          git push
