@@ -23,4 +23,4 @@ jobs:
         run: rm -rf docs && mkdir docs && cp -r build/web/* docs/
 
       - name: Commit and push changes
-        run: git config --global user.email "github-actions@github.com" && git config --global user.name "github-actions" && git add docs && git commit -m "Update web build" || echo "No changes to commit" && git push
+        run: git config --global user.email "github-actions@github.com" && git config --global user.name "github-actions" && git add -f docs && git commit -m "Update web build" --allow-empty && git push
