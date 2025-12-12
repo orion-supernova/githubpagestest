@@ -1,4 +1,4 @@
-name: Deploy Flutter Web to /docs on main
+name: Deploy Flutter Web
 
 on:
   push:
@@ -6,21 +6,28 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - uses: subosito/flutter-action@v2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
           channel: stable
 
       - name: Build Flutter Web
         run: flutter build web --release --pwa-strategy=none
 
-      - name: Prepare docs folder
-        run: rm -rf docs && mkdir docs && cp -r build/web/* docs/
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: build/web
 
-      - name: Commit and push changes
-        run: git config --global user.email "github-actions@github.com" && git config --global user.name "github-actions" && git add -f docs && git commit -m "Update web build" --allow-empty && git push
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
